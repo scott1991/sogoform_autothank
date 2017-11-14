@@ -4,7 +4,7 @@
 // @include     http*://oursogo.com/*tid=*
 // @include     http*://oursogo.com/thread*
 // @version     1
-// @grant       GM_xmlhttpRequest
+// @grant       GM.xmlHttpRequest
 // ==/UserScript==
 
 function post_to_url2(path, postObj, callback) {
@@ -17,7 +17,7 @@ function post_to_url2(path, postObj, callback) {
   }
   formBody = formBody.join('&');
   console.log('ready to post data to: ' + path, 'with body: ' + formBody);
-  GM_xmlhttpRequest({
+  GM.xmlHttpRequest({
     method: 'POST',
     url: path,
     data: formBody,
