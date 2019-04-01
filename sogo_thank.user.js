@@ -6,6 +6,7 @@
 // @version     1
 // @grant       GM.xmlHttpRequest
 // ==/UserScript==
+var THANK_URL= 'https://oursogo.com/forum.php?mod=misc&action=thanks&thankssubmit=yes&infloat=yes';
 
 function post_to_url2(path, postObj, callback) {
   var formBody = [
@@ -25,13 +26,13 @@ function post_to_url2(path, postObj, callback) {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     onload: function (response) {
-      callback();
+      callback(response);
     }
   });
 }
 function goThank() {
   var hidediv = document.getElementsByClassName('locked');
-  var thank_path = 'http://oursogo.com/forum.php?mod=misc&action=thanks&thankssubmit=yes&infloat=yes';
+  var thank_path = THANK_URL ;
   if (hidediv.length > 0 && document.getElementsByClassName('locked')[0].textContent.includes("才能瀏覽"))  {
     console.log('has hidediv, send thank..');
     var formhash = document.getElementById('modactions').formhash.value;
@@ -52,15 +53,12 @@ function goThank() {
       extra: extra,
       handlekey: 'thanks'
     };
-    post_to_url2(thank_path, postObj, function () {
+    post_to_url2(thank_path, postObj, function (response) {
+      console.log('status:', response.status );
       console.log('post done.. go redirecting...')
       location.href = document.URL;
     });
-    //post_to_url(thank_path, postObj);
-  } // else if (document.URL == thank_path) {
-  //  console.log('is thankpage.. redirect now');
-  //  window.location.href = document.getElementsByClassName('alert_btnleft') [0].childNodes[0].getAttribute('href');
-  //}
+  } 
 
 }
 goThank();
